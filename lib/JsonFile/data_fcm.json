@@ -1,0 +1,23 @@
+{
+  "to":"dG4L9hoWQDmz_QinD2OdmG:APA91bHJJ8v8kaaib_AUUoFioaTmvg2EYDKgaT_DDBSAralt2xBPCEMhz2dNFIZ_mvY1fniK47v3mgC7v2_ZdclED_KD5Hx06qks2XExpcW-1kDf2wTjl0UpqAKhyw8Kyc0jToifqAWx",
+  "notification":{
+    "title":"you have recieved a message from michael mamdouh",
+    "body":"testing body from michael",
+    "sound":"default"
+  },
+  "android":{
+    "priority":"HIGH",
+    "notification":{
+      "notification_priority":"priority_MAX",
+      "sound":"default",
+      "default_sound":"true",
+      "default_vibrate_timings":"true",
+      "default_light_sittings":"true"
+    }
+  },
+  "data":{
+    "type":"order",
+    "id":"87",
+    "click_action":"FLUTTER_NOTIFICATION_CLICK"
+  }
+}
