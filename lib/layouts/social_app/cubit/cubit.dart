@@ -31,7 +31,9 @@ class SocialCubit extends Cubit<SocialStates> {
   int currentIndex = 0;
   RegisterModel? userData;
   bool isDark=isDarkMode;
-  // bool isTextFieldSelected=false;
+  bool isSelectedMicro=false;
+  bool isTextFieldWriting=false;
+  String audioPath="";
 
   List<Widget> screens = [
     HomeScreen(),
@@ -59,6 +61,10 @@ class SocialCubit extends Cubit<SocialStates> {
     emit(ChangeModeApp());
   }
 
+
+
+
+
   Future getUserData() async {
     emit(SocialGetDataLoadingState());
     return await FirebaseFirestore.instance
@@ -67,7 +73,7 @@ class SocialCubit extends Cubit<SocialStates> {
         .get()
         .then((value) {
       userData = RegisterModel.fromjson(value.data()!);
-      print(userData!.image);
+      print("image: {userData!.image}");
       emit(SocialGetDataSuccessState());
     }).catchError((onError) {
       print(onError.toString());
@@ -233,6 +239,7 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
+
   updateUserData({
     String? name,
     String? phone,
@@ -336,7 +343,6 @@ class SocialCubit extends Cubit<SocialStates> {
       date: dateTime,
     );
 
-    //send message to sender
     FirebaseFirestore.instance.collection(Collection)
         .doc(userData!.uid).collection("Chats").doc(receiverUser)
     .collection("Messages").add(model.toMap()).then((value){
@@ -353,25 +359,42 @@ class SocialCubit extends Cubit<SocialStates> {
     }).catchError((error){
       emit(SendMessageErrorState());
     });
+    // getMessage(receiverUser: receiverUser);
 }
 
  List<MessageModel> messages=[];
   getMessage({
     required String receiverUser,
   })async{
-    messages=[];
    await FirebaseFirestore.instance.collection(Collection)
         .doc(userData!.uid).collection("Chats").doc(receiverUser)
         .collection("Messages")
        .orderBy("date")
        .snapshots().listen((event) {
+     messages=[];
+     toast(message: "event lenght: ${event.docs.length}",
+         status:toastStatus.SUCCESS);
           event.docs.forEach((element) {
-            messages.add(MessageModel.fromjson(element.data()));
-            print(element.data().toString());
+            messages!.add(MessageModel.fromjson(element.data()));
+            print("${element.id} jk ${element.data().toString()}");
 
           });
-          print(messages.length);
+          print(messages!.length);
           emit(GetMessageSuccessState());
     });
+  }
+  onWritingOnTextField({required bool isWriting}){
+    isTextFieldWriting = isWriting;
+    emit(OnWritingOnTextField());
+  }
+
+  onChangeAudioPath({required String path}){
+    audioPath = path;
+    emit(OnChangeAudioPath());
+  }
+
+  onSelectedMicrofone({required bool isSelected}){
+    isSelectedMicro= isSelected;
+    emit(OnSelectedMicrofone());
   }
 }
