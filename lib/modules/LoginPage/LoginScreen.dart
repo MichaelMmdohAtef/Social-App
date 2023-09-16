@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_project/layouts/social_app/cubit/cubit.dart';
 import 'package:social_project/layouts/social_app/social_layout.dart';
 import 'package:social_project/modules/RegisterScreen/RegisterScreen.dart';
 import 'package:social_project/shared/components/components.dart';
@@ -35,6 +36,7 @@ class LoginScreen extends StatelessWidget {
            await CasheHelper.setString(key: ID, value: state.uid).then((value){
               uid=state.uid;
             });
+           SocialCubit.get(context).getUserData();
             navigateAndFinish(context, SocialLayout());
           }
           else if(state is SocialLoginErrorState){

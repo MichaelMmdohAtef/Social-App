@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_project/layouts/social_app/cubit/cubit.dart';
 import 'package:social_project/layouts/social_app/social_layout.dart';
 import 'package:social_project/modules/LoginPage/LoginScreen.dart';
 import 'package:social_project/shared/components/components.dart';
@@ -32,6 +33,7 @@ class RegisterScreen extends StatelessWidget {
           if(state is SocialRegisterSuccessState){
             toast(message: "your email have been created successfully",
               status: toastStatus.SUCCESS,);
+            SocialCubit.get(context).getUserData();
           }
           else if(state is SocialRegisterErrorState){
             toast(message: state.error.toString(),

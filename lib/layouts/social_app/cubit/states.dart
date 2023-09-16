@@ -59,3 +59,10 @@ class GetMessageSuccessState extends SocialStates{}
 class SendMessageErrorState extends SocialStates{}
 
 class ChangeModeApp extends SocialStates{}
+
+
+class OnSelectedMicrofone extends SocialStates{}
+
+class OnWritingOnTextField extends SocialStates{}
+
+class OnChangeAudioPath extends SocialStates{}
